@@ -36,10 +36,10 @@ const calculateResult = () => {
       case '-':
         result = num1 - num2;
         break;
-      case '∗':
+      case '×':
         result = num1 * num2;
         break;
-      case '/':
+      case '÷':
         result = num2 !== 0 ? num1 / num2 : 'Erro';
         break;
     }
