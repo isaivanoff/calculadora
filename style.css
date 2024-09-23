@@ -72,6 +72,12 @@ button.operator:hover {
   background-color: #e67e22;
 }
 
+button.selected-operator {
+  background-color: #e17055;
+  color: white;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
 button#equal-btn {
   grid-column: span 2;
   background-color: #00b894;

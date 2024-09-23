@@ -3,6 +3,7 @@ let currentInput = '';
 let operator = '';
 let firstNumber = '';
 let secondNumber = '';
+let selectedOperatorButton = null;
 
 const updateDisplay = (value) => {
   display.value = value;
@@ -14,6 +15,9 @@ const clearCalculator = () => {
   firstNumber = '';
   secondNumber = '';
   updateDisplay('');
+  if (selectedOperatorButton) {
+    selectedOperatorButton.classList.remove('selected-operator');
+  }
 };
 
 const calculateResult = () => {
@@ -29,7 +33,7 @@ const calculateResult = () => {
       case '-':
         result = num1 - num2;
         break;
-      case '*':
+      case '∗':
         result = num1 * num2;
         break;
       case '/':
@@ -42,13 +46,28 @@ const calculateResult = () => {
     secondNumber = '';
     operator = '';
     currentInput = '';
+    if (selectedOperatorButton) {
+      selectedOperatorButton.classList.remove('selected-operator');
+    }
   }
+};
+
+// Função para desmarcar o operador anterior e marcar o atual
+const markOperator = (button) => {
+  if (selectedOperatorButton) {
+    selectedOperatorButton.classList.remove('selected-operator');
+  }
+  selectedOperatorButton = button;
+  selectedOperatorButton.classList.add('selected-operator');
 };
 
 document.querySelectorAll('.number').forEach(button => {
   button.addEventListener('click', () => {
     currentInput += button.textContent;
     updateDisplay(currentInput);
+    if (selectedOperatorButton) {
+      selectedOperatorButton.classList.remove('selected-operator');
+    }
   });
 });
 
@@ -63,6 +82,7 @@ document.querySelectorAll('.operator').forEach(button => {
       }
       operator = button.textContent;
       currentInput = '';
+      markOperator(button); // Marca o operador selecionado
     }
   });
 });
