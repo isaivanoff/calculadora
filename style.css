@@ -33,7 +33,7 @@ body {
 }
 
 .calculator:hover {
-  transform: scale(1.05);
+  transform: scale(1.01);
 }
 
 #display {
@@ -99,19 +99,19 @@ button#equal-btn:hover {
 
 button#backspace {
   grid-column: span 2;
-  background-color: #ff7070;
+  background-color: #acb6e5;
   color: white;
 }
 
 button#backspace:hover {
-  background-color: #bd442f;
+  background-color: #6e7fca;
 }
 
 button#clear {
-  background-color: #ff7070;
+  background-color: #acb6e5;
   color: white;
 }
 
 button#clear:hover {
-  background-color: #bd442f;
+  background-color: #6e7fca;
 }
