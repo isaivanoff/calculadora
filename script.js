@@ -3,6 +3,9 @@ let currentInput = '';
 let operator = '';
 let firstNumber = '';
 let secondNumber = '';
+let result = '';
+let selectedOperatorButton = null;
+let newCalculation = false;
 
 const updateDisplay = (value) => {
   display.value = value;
@@ -13,15 +16,19 @@ const clearCalculator = () => {
   operator = '';
   firstNumber = '';
   secondNumber = '';
+  result = '';
+  newCalculation = false;
   updateDisplay('');
+  if (selectedOperatorButton) {
+    selectedOperatorButton.classList.remove('selected-operator');
+  }
 };
 
 const calculateResult = () => {
   if (firstNumber !== '' && secondNumber !== '' && operator !== '') {
     const num1 = parseFloat(firstNumber);
     const num2 = parseFloat(secondNumber);
-    let result;
-
+    
     switch (operator) {
       case '+':
         result = num1 + num2;
@@ -38,31 +45,51 @@ const calculateResult = () => {
     }
 
     updateDisplay(result);
-    firstNumber = result.toString();
+    firstNumber = result.toString(); // Armazena o resultado como o próximo "firstNumber"
     secondNumber = '';
-    operator = '';
     currentInput = '';
+    operator = '';
+    newCalculation = true;
+    if (selectedOperatorButton) {
+      selectedOperatorButton.classList.remove('selected-operator');
+    }
   }
+};
+
+const markOperator = (button) => {
+  if (selectedOperatorButton) {
+    selectedOperatorButton.classList.remove('selected-operator');
+  }
+  selectedOperatorButton = button;
+  selectedOperatorButton.classList.add('selected-operator');
 };
 
 document.querySelectorAll('.number').forEach(button => {
   button.addEventListener('click', () => {
+    if (newCalculation) {
+      currentInput = '';
+      newCalculation = false;
+    }
     currentInput += button.textContent;
     updateDisplay(currentInput);
+    if (selectedOperatorButton) {
+      selectedOperatorButton.classList.remove('selected-operator');
+    }
   });
 });
 
 document.querySelectorAll('.operator').forEach(button => {
   button.addEventListener('click', () => {
-    if (currentInput !== '') {
+    if (currentInput !== '' || newCalculation) {
       if (firstNumber === '') {
-        firstNumber = currentInput;
-      } else if (operator !== '') {
+        firstNumber = currentInput || result;
+      } else if (operator !== '' && currentInput !== '') {
         secondNumber = currentInput;
         calculateResult();
       }
       operator = button.textContent;
       currentInput = '';
+      markOperator(button); // Marca o operador selecionado
     }
   });
 });
